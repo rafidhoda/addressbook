@@ -7,6 +7,23 @@ class AddressBook
     @contacts = []
   end
   
+  def find_by_name(name)
+    results = []
+    search = name.downcase
+    contacts.each do |contact|
+      if contact.full_name.downcase.include?(search)
+        results.push(contact)
+      end
+    end
+    puts "Name search results (#{search})"
+    results.each do |contact|
+      puts contact.to_s('full_name')
+      contact.print_phone_numbers
+      contact.print_addresses
+      puts "\n"
+    end
+  end
+  
   def print_contact_list
     puts "Contact List"
     contacts.each do |contact|
@@ -24,5 +41,15 @@ jason.add_phone_number("Home", "123-456-7890")
 jason.add_phone_number("Work", "456-789-0123")
 jason.add_address("Home", "123 Main St.", "", "Portland", "OR", "12345")
 
+rafid = Contact.new
+rafid.first_name = "Rafid"
+rafid.last_name = "Hoda"
+rafid.add_phone_number("Home", "12345678")
+rafid.add_phone_number("Work", "45678901")
+rafid.add_address("Home", "Fredrikke Qvams gate 5b", "", "Oslo", "Norway", "0172")
+
 address_book.contacts.push(jason)
-address_book.print_contact_list
+address_book.contacts.push(rafid)
+#address_book.print_contact_list
+
+address_book.find_by_name("a")
