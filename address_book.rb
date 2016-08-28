@@ -7,6 +7,80 @@ class AddressBook
     @contacts = []
   end
   
+  def run
+    loop do
+      puts "Address Book"
+      puts "a: Add Contact"
+      puts "p: Print Address Book"
+      puts "s: Search"
+      puts "e: Exit"
+      print "Enter your choice: "
+      input = gets.chomp.downcase
+      case input
+      when 'a'
+        add_contact
+      when 'p'
+        print_contact_list
+      when 's'
+        print "Search term: "
+        search = gets.chomp
+        find_by_name(search)
+        find_by_phone_number(search)
+        find_by_address(search)
+      when 'e'
+        break
+      end
+      puts "\n"
+    end
+  end
+  
+  def add_contact
+    contact = Contact.new
+    print "First name: "
+    contact.first_name = gets.chomp
+    print "Middle name: "
+    contact.middle_name = gets.chomp
+    print "Last name: "
+    contact.last_name = gets.chomp
+    
+    loop do
+      puts "Add phone number or address? "
+      puts "p: Add phone number"
+      puts "a: Add address"
+      puts "(Any other key to go back)"
+      response = gets.chomp.downcase
+      case response
+      when 'p'
+        phone = PhoneNumber.new
+        print "Phone number kind (Home, Work, etc): "
+        phone.kind = gets.chomp
+        print "Number: "
+        phone.number = gets.chomp
+        contact.phone_numbers.push(phone)
+      when 'a'
+        address = Address.new
+        print "Address Kind (Home, Work, etc): "
+        address.kind = gets.chomp
+        print "Address line 1: "
+        address.street_1 = gets.chomp
+        print "Address line 2: "
+        address.street_2 = gets.chomp
+        print "City: "
+        address.city = gets.chomp
+        print "State: "
+        address.state = gets.chomp
+        print "Postal Code: "
+        address.postal_code = gets.chomp
+        contact.addresses.push(address)
+      else
+        print "\n"
+        break
+      end
+    end
+    
+    contacts.push(contact)
+  end
+  
   def print_results(search, results)
     puts search
     results.each do |contact|
@@ -63,25 +137,4 @@ class AddressBook
 end
 
 address_book = AddressBook.new
-
-jason = Contact.new
-jason.first_name = "Jason"
-jason.last_name = "Seifer"
-jason.add_phone_number("Home", "123-456-7890")
-jason.add_phone_number("Work", "456-789-0123")
-jason.add_address("Home", "123 Main St.", "", "Portland", "OR", "12345")
-
-rafid = Contact.new
-rafid.first_name = "Rafid"
-rafid.last_name = "Hoda"
-rafid.add_phone_number("Home", "12345678")
-rafid.add_phone_number("Work", "45678901")
-rafid.add_address("Home", "Fredrikke Qvams gate 5b", "", "Oslo", "Norway", "0172")
-
-address_book.contacts.push(jason)
-address_book.contacts.push(rafid)
-#address_book.print_contact_list
-
-#address_book.find_by_name("a")
-#address_book.find_by_phone_number("2")
-#address_book.find_by_address("0172")
+address_book.run
