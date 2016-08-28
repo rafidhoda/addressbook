@@ -1,0 +1,23 @@
+---
+- !ruby/object:Contact
+  phone_numbers: []
+  addresses: []
+  first_name: Rafid
+  middle_name: ''
+  last_name: Hoda
+- !ruby/object:Contact
+  phone_numbers:
+  - !ruby/object:PhoneNumber
+    kind: 123-456-879
+    number: '12345635'
+  addresses:
+  - !ruby/object:Address
+    kind: Home
+    street_1: 123 Main Street
+    street_2: ''
+    city: Orlando
+    state: FL
+    postal_code: '1029'
+  first_name: Nick
+  middle_name: Avery
+  last_name: Pettit
